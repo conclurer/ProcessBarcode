@@ -1,0 +1,38 @@
+<?php
+
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'BarcodeObject.php';
+
+class ProcessBarcode extends WireData implements Module, ConfigurableModule {
+
+    public static function getModuleInfo() {
+        return array(
+            'title' => 'Barcodes',
+            'author' => 'Conclurer GbR',
+            'version' => 100,
+            'summary' => 'Generates Barcodes'
+        );
+    }
+
+    public function generate($code, BarcodeEncoderBase $encoderBase = null) {
+        $object = new BarcodeObject($code, $encoderBase);
+        $object->barColor = array(0,0,0);
+        $object->backgroundColor = array(255,255,255);
+        $object->textColor = array(0,0,0);
+        $object->fontPath = dirname(__FILE__).DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'FreeSansBold.ttf';
+
+        return $object;
+    }
+
+    /**
+     * Return an InputfieldsWrapper of Inputfields used to configure the class
+     *
+     * @param array $data Array of config values indexed by field name
+     * @return InputfieldsWrapper
+     *
+     */
+    public static function getModuleConfigInputfields(array $data)
+    {
+        // TODO: Implement getModuleConfigInputfields() method.
+        return new InputfieldWrapper();
+    }
+}
